@@ -1,5 +1,5 @@
 type Options = {
-  type?: "success" | "danger" | "info";
+  type?: "success" | "danger" | "info" | "primary" | "warning";
   customButtons?: {
     label: string;
     onClick: () => void;
@@ -39,7 +39,11 @@ export class Toast {
     this.toastCloseBtn = this.createBtn({
       label: "close",
       onClick: () => this.close(),
+      style: { color: "currentColor" },
+      className: "toast-btn-close",
     });
+    this.toastCloseBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 42" fill="currentColor" height="32" width="32">
+    <path d="m12.45 37.65-2.1-2.1L21.9 24 10.35 12.45l2.1-2.1L24 21.9l11.55-11.55 2.1 2.1L26.1 24l11.55 11.55-2.1 2.1L24 26.1Z"/></svg>`;
     this.toastParagraph = document.createElement("p");
     this.toastContainer.classList.add("t-toast-container");
     if (options.top) {
@@ -62,6 +66,14 @@ export class Toast {
   }
   success({ message, options = {} }: ToastProps) {
     options.type = "success";
+    this.render({ message: message, options: options });
+  }
+  primary({ message, options = {} }: ToastProps) {
+    options.type = "primary";
+    this.render({ message: message, options: options });
+  }
+  warning({ message, options = {} }: ToastProps) {
+    options.type = "warning";
     this.render({ message: message, options: options });
   }
   info({ message, options = {} }: ToastProps) {
@@ -128,26 +140,12 @@ const css = `
 
   .t-toast {
     pointer-events: all;
-    background: #fff;
     padding: 10px 15px 0;
-    border-left-style: solid;
-    border-left-width: 5px;
     border-radius: 4px;
-    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%);
   }
 
   .t-toast-display {
     transform: translateX(0);
-  }
-
-  .t-toast-info {
-    border-left-color: #0dcaf0;
-  }
-  .t-toast-success {
-    border-left-color: #2ecc40;
-  }
-  .t-toast-danger {
-    border-left-color: #ff4136;
   }
 
   .t-toast-top {
@@ -158,7 +156,6 @@ const css = `
   }
 
   .t-toast-btn {
-    background: #f0f0f0;
     padding: 5px 10px;
     border: 0;
     border-radius: 4px;
@@ -168,10 +165,45 @@ const css = `
     margin-right: 10px;
     margin-bottom: 10px;
     cursor: pointer;
+    background:transparent;
   }
   .t-toast-custom-btn {
     background: #323232;
     color: #fff;
+  }
+  .t-toast-primary {
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+  }
+  .t-toast-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+  }
+  .t-toast-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+  }
+  .t-toast-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+  }
+  .t-toast-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+  }
+  .toast-btn-close {
+    position: fixed;
+    top: 0;
+    right: 0;
+    color: currentColor;
+    margin:0;
+    padding:0;
+    padding-left:5px;
   }
   `;
 export default new Toast();
