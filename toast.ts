@@ -136,11 +136,12 @@ const css = `
     transform: translateX(-150%);
     transition: transform 1s;
     pointer-events: none;
+    z-index:9999;
   }
 
   .t-toast {
     pointer-events: all;
-    padding: 10px 15px 0;
+    padding: 1rem;
     border-radius: 4px;
   }
 
